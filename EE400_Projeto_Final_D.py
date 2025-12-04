@@ -9,7 +9,7 @@ v = 300000 # c = velocidade da luz (km/s)
 #Fica mais fácil de entender as contas
 TOA = 600000
 
-#Elementos Orbitais para cada satélite
+#Elementos Orbitais para cada satélite, (órbitas elípticas bem definidas)
 satelites = {
     'satelite_1': {'a': 15300, 'e': 0.41, 'w': 60, 'i': 30, 'o': 0, 'dt': 4708.5603},
     'satelite_2': {'a': 16100, 'e': 0.342, 'w': 10, 'i': 30, 'o': 40, 'dt': 5082.6453},
@@ -114,4 +114,5 @@ print("\n--- Resultado ---")
 print("Posição Real (Definida):   ", posicao_real_drone)
 print("Posição Estimada (Calculada):", r_estimado)
 erro = np.linalg.norm(posicao_real_drone - r_estimado)
+
 print(f"Erro final: {erro:.4f} km")
