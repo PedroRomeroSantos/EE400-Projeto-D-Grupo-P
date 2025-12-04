@@ -66,7 +66,7 @@ def posicao(sat):
 lista_r = [posicao(sat) for sat in satelites.values()]
 
 #criamos o TOT artificialmente pois não temos dados reais.
-# Ex: Um ponto no equador com raio da terra ~6371km
+#um ponto na superfície considerando o raio da terra 6371km
 posicao_real_drone = np.array([-6420., -6432., 6325.]) 
 
 TOT = {}
@@ -85,7 +85,7 @@ for i, pos_sat in enumerate(lista_r):
     #print(f"Sat {i+1}: Distancia={dist_real:.2f}km, TOT gerado={tot_ms:.4f}ms")
 
 #descobrindo a posição real com os TOTs e as posições dos satélites.
-# Calcular o TOF percebido (s) baseado nos dados recebidos
+#calcular o TOF percebido (s) baseado nos dados recebidos
 TOF = [(TOA - TOT[f'tempo_{i+1}']) / 1000 for i in range(len(satelites))]
 
 def gradiente(lista_r, r, TOF):
@@ -101,7 +101,6 @@ def gradiente(lista_r, r, TOF):
 #chute inicial (qualquer na superfície da terra)
 r_estimado = np.array([-6371., 0., 0.]) 
 
-print(f"\nIniciando Otimização...")
 print(f"Chute inicial: {r_estimado}")
 
 #loop de otimização (Gradiente Descendente)
@@ -110,9 +109,10 @@ for i in range(500): # 500 iterações
     G = gradiente(lista_r, r_estimado, TOF)
     r_estimado = r_estimado - learning_rate * G
 
-print("\n--- Resultado ---")
+print("\n---resultado---")
 print("Posição Real (Definida):   ", posicao_real_drone)
 print("Posição Estimada (Calculada):", r_estimado)
 erro = np.linalg.norm(posicao_real_drone - r_estimado)
 
 print(f"Erro final: {erro:.4f} km")
+
